@@ -5,6 +5,9 @@ namespace TASagentTwitchBot.Plugin.XInput
     public interface IButtonPressDispatcher
     {
         bool TriggerKeyPress(DirectXKeyStrokes key, int durationMs);
+
+        bool TriggerKeyDown(DirectXKeyStrokes key);
+        bool TriggerKeyUp(DirectXKeyStrokes key);
     }
 
     /// <summary>
@@ -43,6 +46,28 @@ namespace TASagentTwitchBot.Plugin.XInput
 
             PressButton(key, durationMs);
 
+            return true;
+        }
+
+        public bool TriggerKeyDown(DirectXKeyStrokes key)
+        {
+            if (!depressedKeys.Add(key))
+            {
+                return false;
+            }
+
+            SendKey(key, false, InputType.Keyboard);
+            return true;
+        }
+
+        public bool TriggerKeyUp(DirectXKeyStrokes key)
+        {
+            if (!depressedKeys.Remove(key))
+            {
+                return false;
+            }
+
+            SendKey(key, true, InputType.Keyboard);
             return true;
         }
 
