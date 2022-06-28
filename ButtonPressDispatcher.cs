@@ -2,6 +2,7 @@
 
 namespace TASagentTwitchBot.Plugin.XInput
 {
+    [Core.AutoRegister]
     public interface IButtonPressDispatcher
     {
         bool TriggerKeyPress(DirectXKeyStrokes key, int durationMs);
